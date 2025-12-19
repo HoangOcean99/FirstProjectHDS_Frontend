@@ -8,5 +8,9 @@ const saleOutApi = {
         const url = 'SaleOut';
         return axiosClient.get(url);
     },
+    insertSaleOut(saleOut) {
+        const url = 'SaleOut';
+        return axiosClient.post(url, saleOut);
+    },
 }
 export default saleOutApi;

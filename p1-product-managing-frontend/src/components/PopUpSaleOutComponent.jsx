@@ -4,12 +4,13 @@ import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}, allMasterProductData }) => {
 
     const [formData, setFormData] = useState({
-        customerPoNumber: '',
+        customerPoNo: '',
         orderDate: '',
         customerName: '',
-        product: '',
+        productCode: '',
+        productName: '',
         unit: '',
-        unitPrice: '',
+        price: '',
         quantity: '',
         quantityPerBox: '',
     });
@@ -17,12 +18,13 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
     useEffect(() => {
         if (initialData) {
             setFormData({
-                customerPoNumber: initialData.customerPoNumber || '',
+                customerPoNo: initialData.customerPoNo || '',
                 orderDate: initialData.orderDate || '',
                 customerName: initialData.customerName || '',
-                product: initialData.productCode || '',
+                productCode: initialData.productCode || '',
+                productName: initialData.productName || '',
                 unit: initialData.unit || '',
-                unitPrice: initialData.unitPrice || '',
+                price: initialData.price || '',
                 quantity: initialData.quantity || '',
                 quantityPerBox: initialData.quantityPerBox || '',
             });
@@ -46,14 +48,16 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
         if (selectedProduct) {
             setFormData(prev => ({
                 ...prev,
-                product: selectedProduct.productCode,
+                productCode: selectedProduct.productCode,
+                productName: selectedProduct.productName,
                 unit: selectedProduct.unit || '',
                 quantityPerBox: selectedProduct.quantityPerBox || '',
             }));
         } else {
             setFormData(prev => ({
                 ...prev,
-                product: '',
+                productCode: '',
+                productName: '',
                 unit: '',
                 quantityPerBox: '',
             }));
@@ -87,8 +91,8 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                                 <Form.Label>Số PO Khách hàng <span className="text-danger">*</span></Form.Label>
                                 <Form.Control
                                     type="text"
-                                    name="customerPoNumber"
-                                    value={formData.customerPoNumber}
+                                    name="customerPoNo"
+                                    value={formData.customerPoNo}
                                     onChange={handleChange}
                                     required
                                 />
@@ -125,8 +129,8 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                             <Form.Group>
                                 <Form.Label>Sản phẩm <span className="text-danger">*</span></Form.Label>
                                 <Form.Select
-                                    name="product"
-                                    value={formData.product}
+                                    name="productCode"
+                                    value={formData.productCode}
                                     onChange={handleSelectProduct}
                                     required
                                 >
@@ -158,8 +162,8 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                                 <Form.Label>Đơn giá <span className="text-danger">*</span></Form.Label>
                                 <Form.Control
                                     type="number"
-                                    name="unitPrice"
-                                    value={formData.unitPrice}
+                                    name="price"
+                                    value={formData.price}
                                     onChange={handleChange}
                                     required
                                 />

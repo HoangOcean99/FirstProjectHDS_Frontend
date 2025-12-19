@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import PopUpUploadFileProduct from "../components/PopUpUploadFileProduct";
 import { downloadTemplate } from "../utils/handleTemplateUtil";
 import { notifyError } from "../utils/swalPopUp";
+import { formatNumber } from "../utils/handleNumberUtil";
 
 const MasterProductPage = () => {
     const [masterProductData, setMasterProductData] = useState([]);
@@ -41,8 +42,13 @@ const MasterProductPage = () => {
         try {
             setIsLoading(true);
             const response = await masterProductApi.getAll();
-            setMasterProductData(response);
-            setOriginProductData(response);
+            const mainData = response.map((item, _) => ({
+                ...item,
+                quantityPerBox: formatNumber(item.quantityPerBox),
+                productWeight: formatNumber(item.productWeight)
+            }))
+            setMasterProductData(mainData);
+            setOriginProductData(mainData);
 
             const totalPages = Math.ceil(response.length / rowsPerPage);
             if (page >= totalPages) setPage(totalPages - 1);
@@ -77,7 +83,6 @@ const MasterProductPage = () => {
             }
             await fetchMasterProduct();
         } catch (error) {
-            console.log(error)
             if (error.status === 409) {
                 toast.error(error?.response?.data?.message);
             }

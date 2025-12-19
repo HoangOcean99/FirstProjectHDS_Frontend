@@ -32,6 +32,12 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+    const maxPage = Math.max(
+        0,
+        Math.ceil(displayData.length / rowsPerPage) - 1
+    );
+
+    const safePage = Math.min(page, maxPage);
 
     return (
         <Paper className="card shadow-sm">
@@ -98,7 +104,7 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
             <TablePagination
                 component="div"
                 count={displayData.length}
-                page={page}
+                page={safePage}
                 onPageChange={handleChangePage}
                 rowsPerPage={rowsPerPage}
                 onRowsPerPageChange={handleChangeRowsPerPage}

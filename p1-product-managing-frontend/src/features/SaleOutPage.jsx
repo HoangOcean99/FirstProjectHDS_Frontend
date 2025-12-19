@@ -5,9 +5,11 @@ import SearchComponent from "../components/SearchComponent";
 import SaleOutApi from "../api/SaleOutApi";
 import saleOutApi from "../api/SaleOutApi";
 import LoadingComponent from "../components/LoadingComponent";
-import { formatIntDate } from "../utils/handleSaleOut";
+import { formatDateToInt, formatIntDate } from "../utils/handleSaleOut";
 import PopUpSaleOutComponent from "../components/PopUpSaleOutComponent";
 import masterProductApi from "../api/MasterProductApi";
+import { toast } from "react-toastify";
+import { formatNumber } from "../utils/handleNumberUtil";
 
 const SaleOutPage = () => {
     const [SaleOutData, setSaleOutData] = useState([]);
@@ -48,7 +50,12 @@ const SaleOutPage = () => {
             const responseMasterProduct = await masterProductApi.getAll();
             const mainData = responseSaleOut.map((item) => ({
                 ...item,
-                orderDate: formatIntDate(item.orderDate)
+                orderDate: formatIntDate(item.orderDate),
+                quantity: formatNumber(item.quantity),
+                price: formatNumber(item.price),
+                amount: formatNumber(item.amount),
+                quantityPerBox: formatNumber(item.quantityPerBox),
+                boxQuantity: formatNumber(item.boxQuantity),
             }));
             setSaleOutData(mainData);
             setOriginSaleOutData(mainData);
@@ -83,13 +90,21 @@ const SaleOutPage = () => {
                 await masterProductApi.editProduct({ ...formData, id });
                 toast.success("Chỉnh sửa sản phẩm thành công!");
             } else {
-                await masterProductApi.insertProduct(formData);
+                const dataSend = {
+                    ...formData,
+                    boxQuantity: Math.ceil(formData.quantity / formData.quantityPerBox),
+                    amount: formData.quantity * formData.price,
+                    orderDate: formatDateToInt(formData.orderDate),
+                    quantity: parseInt(formData.quantity),
+                    price: parseInt(formData.price)
+
+                }
+                await saleOutApi.insertSaleOut(dataSend);
                 toast.success("Thêm sản phẩm thành công!");
             }
-            await fetchMasterProduct();
+            await fetchSaleOut();
         } catch (error) {
-            console.error(error);
-            toast.error("Đã xảy ra lỗi!");
+            toast.error(error?.response?.data?.message);
         } finally {
             setIsLoading(false);
             setIsOpenPopUpInsertEdit(false);
