@@ -14,6 +14,7 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
         quantity: '',
         quantityPerBox: '',
     });
+    console.log('initialData', initialData)
 
     useEffect(() => {
         if (initialData) {
@@ -32,7 +33,7 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
     }, [initialData]);
 
     const isEdit = initialData.id ? true : false;
-    const modalTitle = isEdit ? 'Chỉnh sửa Đơn hàng' : 'Thêm mới Đơn hàng';
+    const modalTitle = isEdit ? 'Chỉnh sửa Đơn xuất hàng' : 'Thêm mới Đơn xuất hàng';
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -95,6 +96,7 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                                     value={formData.customerPoNo}
                                     onChange={handleChange}
                                     required
+                                    disabled={isEdit}
                                 />
                             </Form.Group>
                         </Col>
@@ -107,6 +109,7 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                                     value={formData.orderDate}
                                     onChange={handleChange}
                                     required
+                                    disabled={isEdit}
                                 />
                             </Form.Group>
                         </Col>
@@ -122,6 +125,7 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                                     value={formData.customerName}
                                     onChange={handleChange}
                                     required
+                                    disabled={isEdit}
                                 />
                             </Form.Group>
                         </Col>

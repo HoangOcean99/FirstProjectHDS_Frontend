@@ -87,13 +87,19 @@ const SaleOutPage = () => {
         try {
             setIsLoading(true);
             if (isEdit) {
-                await masterProductApi.editProduct({ ...formData, id });
+                const dataSend = {
+                    ...formData,
+                    boxQuantity: Math.ceil(formData.quantity / formData.quantityPerBox),
+                    orderDate: formatDateToInt(formData.orderDate),
+                    quantity: parseInt(formData.quantity),
+                    price: parseInt(formData.price),
+                }
+                await saleOutApi.editSaleOut({ ...dataSend, id });
                 toast.success("Chỉnh sửa sản phẩm thành công!");
             } else {
                 const dataSend = {
                     ...formData,
                     boxQuantity: Math.ceil(formData.quantity / formData.quantityPerBox),
-                    amount: formData.quantity * formData.price,
                     orderDate: formatDateToInt(formData.orderDate),
                     quantity: parseInt(formData.quantity),
                     price: parseInt(formData.price)

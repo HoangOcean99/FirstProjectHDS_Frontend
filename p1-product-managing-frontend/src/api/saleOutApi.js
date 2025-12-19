@@ -15,6 +15,10 @@ const saleOutApi = {
     deleteSaleOut(id) {
         const url = `SaleOut/${id}`;
         return axiosClient.delete(url);
-    }
+    },
+    editSaleOut(saleOut) {
+        const url = 'SaleOut';
+        return axiosClient.put(url, saleOut);
+    },
 }
 export default saleOutApi;
