@@ -10,6 +10,7 @@ import PopUpSaleOutComponent from "../components/PopUpSaleOutComponent";
 import masterProductApi from "../api/MasterProductApi";
 import { toast } from "react-toastify";
 import { formatNumber } from "../utils/handleNumberUtil";
+import { downloadTemplate } from "../utils/handleTemplateUtil";
 
 const SaleOutPage = () => {
     const [SaleOutData, setSaleOutData] = useState([]);
@@ -30,13 +31,9 @@ const SaleOutPage = () => {
         { title: "Ngày đặt hàng", data: "orderDate" },
         { title: "Khách hàng", data: "customerName" },
         { title: "Mã sản phẩm", data: "productCode" },
-        { title: "Tên sản phẩm", data: "productName" },
-        { title: "Đơn vị tính", data: "unit" },
         { title: "Số lượng", data: "quantity" },
         { title: "Số lượng/thùng", data: "quantityPerBox" },
-        { title: "Số thùng", data: "boxQuantity" },
         { title: "Đơn giá", data: "price" },
-        { title: "Thành tiền", data: "amount" }
     ];
 
     useEffect(() => {
@@ -121,7 +118,7 @@ const SaleOutPage = () => {
         const columns = columnData.map((item, index) => {
             return item.title
         })
-        await downloadTemplate(columns, 'TemplateMasterProduct');
+        await downloadTemplate(columns, 'TemplateSaleOut');
     }
 
     const handleDelete = async (id) => {
