@@ -1,8 +1,8 @@
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import MasterProductPage from "../features/MasterProductPage";
+import MasterProductPage from "../pages/MasterProductPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SaleOutPage from "../features/SaleOutPage";
+import SaleOutPage from "../pages/SaleOutPage";
 
 const AppRoutes = () => {
     return (
