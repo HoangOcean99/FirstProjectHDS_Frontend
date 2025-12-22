@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
     const navigate = useNavigate();
+    
     return (
         <div className="mt-5 rounded-5 d-flex align-items-center">
             {/* Container chính */}

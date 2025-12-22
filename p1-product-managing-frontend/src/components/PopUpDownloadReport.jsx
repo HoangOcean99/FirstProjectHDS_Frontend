@@ -6,12 +6,11 @@ const PopUpDownloadReport = ({ show, handleClose, handleExport }) => {
         fromDate: '',
         toDate: '',
     });
-
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         handleExport(formData);

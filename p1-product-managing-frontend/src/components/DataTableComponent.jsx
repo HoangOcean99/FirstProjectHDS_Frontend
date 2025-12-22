@@ -15,7 +15,6 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
     useEffect(() => {
         setDisplayData(data || []);
     }, [data]);
-
     const handleDelete = async (id) => {
         const result = await confirmDelete({
             title: "Bạn có chắc chắn muốn xóa sản phẩm không?",
@@ -23,11 +22,9 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
         });
         if (result.isConfirmed) deleteProduct(id);
     };
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
@@ -36,7 +33,6 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
         0,
         Math.ceil(displayData.length / rowsPerPage) - 1
     );
-
     const safePage = Math.min(page, maxPage);
 
     return (

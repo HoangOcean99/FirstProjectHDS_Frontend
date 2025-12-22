@@ -22,15 +22,12 @@ const SaleOutPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isOpenPopUpInsertEdit, setIsOpenPopUpInsertEdit] = useState(false);
     const [productEdit, setProductEdit] = useState({});
-
     const selectFieldRef = useRef();
     const inputFilterRef = useRef();
-
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpenPopUpUpload, setIsOpenPopUpUpload] = useState(false);
     const [isOpenPopUpReport, setIsOpenPopUpReport] = useState(false);
-
     const navigate = useNavigate();
 
     const columnDataExcel = [
@@ -55,11 +52,9 @@ const SaleOutPage = () => {
         { title: "Đơn giá", data: "price" },
         { title: "Thành tiền", data: "amount" },
     ];
-
     useEffect(() => {
         fetchSaleOut();
     }, []);
-
     const fetchSaleOut = async () => {
         try {
             setIsLoading(true);
@@ -86,7 +81,6 @@ const SaleOutPage = () => {
             setIsLoading(false);
         }
     };
-
     const filterData = () => {
         if (!originSaleOutData) return;
         const field = selectFieldRef.current.value;
@@ -98,8 +92,6 @@ const SaleOutPage = () => {
         setSaleOutData(filtered);
         setPage(0);
     };
-
-
     const handleSave = async (formData, isEdit, id) => {
         try {
             setIsLoading(true);
@@ -133,14 +125,12 @@ const SaleOutPage = () => {
             setIsOpenPopUpInsertEdit(false);
         }
     };
-
     const handleDownload = async () => {
         const columns = columnDataExcel.map((item, index) => {
             return item.title
         })
         await downloadTemplate(columns, 'TemplateSaleOut');
     }
-
     const handleDelete = async (id) => {
         try {
             setIsLoading(true);
@@ -154,7 +144,6 @@ const SaleOutPage = () => {
             setIsLoading(false);
         }
     };
-
     const openInsertPopUp = () => {
         setProductEdit({});
         setIsOpenPopUpInsertEdit(true);

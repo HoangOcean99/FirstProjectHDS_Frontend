@@ -19,10 +19,8 @@ const MasterProductPage = () => {
     const [isOpenPopUpInsertEdit, setIsOpenPopUpInsertEdit] = useState(false);
     const [isOpenPopUpUpload, setIsOpenPopUpUpload] = useState(false);
     const [productEdit, setProductEdit] = useState({});
-
     const selectFieldRef = useRef();
     const inputFilterRef = useRef();
-
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const navigate = useNavigate();
@@ -35,11 +33,9 @@ const MasterProductPage = () => {
         { title: "Số lượng/Thùng", data: "quantityPerBox" },
         { title: "Trọng lượng", data: "productWeight" }
     ];
-
     useEffect(() => {
         fetchMasterProduct();
     }, []);
-
     const fetchMasterProduct = async () => {
         try {
             setIsLoading(true);
@@ -60,7 +56,6 @@ const MasterProductPage = () => {
             setIsLoading(false);
         }
     };
-
     const filterData = () => {
         if (!originProductData) return;
         const field = selectFieldRef.current.value;
@@ -72,7 +67,6 @@ const MasterProductPage = () => {
         setMasterProductData(filtered);
         setPage(0);
     };
-
     const handleSave = async (formData, isEdit, id) => {
         try {
             setIsLoading(true);
@@ -93,7 +87,6 @@ const MasterProductPage = () => {
             setIsOpenPopUpInsertEdit(false);
         }
     };
-
     const handleDelete = async (id) => {
         try {
             setIsLoading(true);
@@ -107,24 +100,20 @@ const MasterProductPage = () => {
             setIsLoading(false);
         }
     };
-
     const openEditPopUp = (data) => {
         setProductEdit(data);
         setIsOpenPopUpInsertEdit(true);
     };
-
     const openInsertPopUp = () => {
         setProductEdit({});
         setIsOpenPopUpInsertEdit(true);
     };
-
     const handleDownload = async () => {
         const columns = columnData.map((item, index) => {
             return item.title
         })
         await downloadTemplate(columns, 'TemplateMasterProduct');
     }
-
     const handleCloseUploadPopUp = async (success) => {
         setIsOpenPopUpUpload(false);
         if (success) {

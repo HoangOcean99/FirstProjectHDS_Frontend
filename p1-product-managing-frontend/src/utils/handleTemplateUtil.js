@@ -18,7 +18,6 @@ export const downloadTemplate = async (columns, name) => {
         toast.error("Tải file thất bại!")
     }
 }
-
 export const uploadTemplate = async (file, setErrors, type) => {
     try {
         var res = null
@@ -48,7 +47,6 @@ export const uploadTemplate = async (file, setErrors, type) => {
         return false;
     }
 }
-
 export const downloadReport = async (fromDate, toDate) => {
     try {
         const response = await templateFileApi.downloadReport(fromDate, toDate);

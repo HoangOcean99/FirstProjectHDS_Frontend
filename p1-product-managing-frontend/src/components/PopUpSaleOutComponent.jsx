@@ -38,7 +38,6 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-
     const handleSelectProduct = (e) => {
         const selectedProductCode = e.target.value;
         const selectedProduct = allMasterProductData.find(
@@ -63,8 +62,6 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
             }));
         }
     };
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
         handleSave(formData, isEdit, initialData.id);

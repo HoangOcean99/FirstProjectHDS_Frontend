@@ -26,7 +26,6 @@ const PopUpMasterProductComponent = ({ show, handleClose, handleSave, initialDat
         }
     }, [initialData]);
 
-
     const isEdit = initialData.productCode ? true : false;
     const modalTitle = isEdit ? 'Chỉnh sửa Sản phẩm' : 'Thêm mới Sản phẩm';
 
@@ -34,7 +33,6 @@ const PopUpMasterProductComponent = ({ show, handleClose, handleSave, initialDat
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         handleSave(formData, isEdit, initialData.id);
