@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { uploadTemplate } from '../utils/handleTemplateUtil';
 
-const PopUpUploadFileProduct = ({ show, handleClose }) => {
+const PopUpUploadFileProduct = ({ show, handleClose, type }) => {
 
     const [file, setFile] = useState(null);
     const [errors, setErrors] = useState([]);
@@ -12,7 +12,7 @@ const PopUpUploadFileProduct = ({ show, handleClose }) => {
             alert("Vui lòng chọn file Excel");
             return;
         }
-        const isSuccess = await uploadTemplate(file, setErrors);
+        const isSuccess = await uploadTemplate(file, setErrors, type);
         handleClose(isSuccess);
         setFile(null);
     };

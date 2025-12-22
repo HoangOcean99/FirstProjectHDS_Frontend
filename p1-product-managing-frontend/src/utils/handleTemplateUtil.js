@@ -19,9 +19,14 @@ export const downloadTemplate = async (columns, name) => {
     }
 }
 
-export const uploadTemplate = async (file, setErrors) => {
+export const uploadTemplate = async (file, setErrors, type) => {
     try {
-        const res = await templateFileApi.UploadTemplate(file);
+        var res = null
+        if (type === 'product')
+            res = await templateFileApi.UploadTemplateProduct(file);
+        else
+            res = await templateFileApi.UploadTemplateSaleOut(file);
+
 
         toast.success(`Import thành công (${res.inserted} dòng)`);
         setErrors([]);
@@ -41,6 +46,23 @@ export const uploadTemplate = async (file, setErrors) => {
             })
         }
         return false;
+    }
+}
+
+export const downloadReport = async (fromDate, toDate) => {
+    try {
+        const response = await templateFileApi.downloadReport(fromDate, toDate);
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `SaleOutReport${fromDate}-${toDate}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        toast.success("Export report thành công!")
+    } catch (error) {
+        toast.error("Export report thất bại!")
     }
 }
 

@@ -10,7 +10,10 @@ import PopUpSaleOutComponent from "../components/PopUpSaleOutComponent";
 import masterProductApi from "../api/MasterProductApi";
 import { toast } from "react-toastify";
 import { formatNumber } from "../utils/handleNumberUtil";
-import { downloadTemplate } from "../utils/handleTemplateUtil";
+import { downloadReport, downloadTemplate } from "../utils/handleTemplateUtil";
+import PopUpUploadFileProduct from "../components/PopUpUploadFileProduct";
+import PopUpDownloadReport from "../components/PopUpDownLoadReport";
+import { useNavigate } from "react-router-dom";
 
 const SaleOutPage = () => {
     const [SaleOutData, setSaleOutData] = useState([]);
@@ -25,15 +28,32 @@ const SaleOutPage = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [isOpenPopUpUpload, setIsOpenPopUpUpload] = useState(false);
+    const [isOpenPopUpReport, setIsOpenPopUpReport] = useState(false);
 
-    const columnData = [
+    const navigate = useNavigate();
+
+    const columnDataExcel = [
         { title: "Số PO khách hàng", data: "customerPoNo" },
-        { title: "Ngày đặt hàng", data: "orderDate" },
+        { title: "Ngày đặt hàng (yyyy/MM/dd)", data: "orderDate" },
         { title: "Khách hàng", data: "customerName" },
         { title: "Mã sản phẩm", data: "productCode" },
         { title: "Số lượng", data: "quantity" },
         { title: "Số lượng/thùng", data: "quantityPerBox" },
         { title: "Đơn giá", data: "price" },
+    ];
+    const columnData = [
+        { title: "Số PO khách hàng", data: "customerPoNo" },
+        { title: "Ngày đặt hàng", data: "orderDate" },
+        { title: "Khách hàng", data: "customerName" },
+        { title: "Mã sản phẩm", data: "productCode" },
+        { title: "Tên sản phẩm", data: "productName" },
+        { title: "Đơn vị tính", data: "unit" },
+        { title: "Số lượng", data: "quantity" },
+        { title: "Số lượng/thùng", data: "quantityPerBox" },
+        { title: "Số thùngthùng", data: "boxQuantity" },
+        { title: "Đơn giá", data: "price" },
+        { title: "Thành tiền", data: "amount" },
     ];
 
     useEffect(() => {
@@ -115,7 +135,7 @@ const SaleOutPage = () => {
     };
 
     const handleDownload = async () => {
-        const columns = columnData.map((item, index) => {
+        const columns = columnDataExcel.map((item, index) => {
             return item.title
         })
         await downloadTemplate(columns, 'TemplateSaleOut');
@@ -143,7 +163,17 @@ const SaleOutPage = () => {
         setProductEdit(data);
         setIsOpenPopUpInsertEdit(true);
     };
-
+    const handleCloseUploadPopUp = async (success) => {
+        setIsOpenPopUpUpload(false);
+        if (success) {
+            await fetchSaleOut();
+        }
+    }
+    const handleExportReport = async (formData) => {
+        const fromDate = formatDateToInt(formData.fromDate);
+        const toDate = formatDateToInt(formData.toDate);
+        await downloadReport(fromDate, toDate);
+    }
 
     if (isLoading) return <LoadingComponent />;
     return (
@@ -161,6 +191,7 @@ const SaleOutPage = () => {
                             openPopUpInsert={openInsertPopUp}
                             handleDownload={handleDownload}
                             openPopUpUpload={() => setIsOpenPopUpUpload(true)}
+                            openPopUpReport={() => setIsOpenPopUpReport(true)}
                             type={true}
                         />
                     </div>
@@ -184,6 +215,18 @@ const SaleOutPage = () => {
                 initialData={productEdit}
                 allMasterProductData={masterProductData}
             />
+
+            <PopUpUploadFileProduct
+                show={isOpenPopUpUpload}
+                handleClose={handleCloseUploadPopUp}
+                type={'saleOut'}
+            />
+            <PopUpDownloadReport
+                show={isOpenPopUpReport}
+                handleClose={() => setIsOpenPopUpReport(false)}
+                handleExport={handleExportReport}
+            />
+            <button className="btn btn-success mb-3" onClick={() => navigate('/master-product')}>Master Product Page</button>
         </div>
     ); s
 }

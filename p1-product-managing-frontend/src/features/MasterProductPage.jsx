@@ -10,6 +10,7 @@ import PopUpUploadFileProduct from "../components/PopUpUploadFileProduct";
 import { downloadTemplate } from "../utils/handleTemplateUtil";
 import { notifyError } from "../utils/swalPopUp";
 import { formatNumber } from "../utils/handleNumberUtil";
+import { useNavigate } from "react-router-dom";
 
 const MasterProductPage = () => {
     const [masterProductData, setMasterProductData] = useState([]);
@@ -24,6 +25,7 @@ const MasterProductPage = () => {
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const navigate = useNavigate();
 
     const columnData = [
         { title: "Mã sản phẩm", data: "productCode" },
@@ -123,7 +125,7 @@ const MasterProductPage = () => {
         await downloadTemplate(columns, 'TemplateMasterProduct');
     }
 
-    const handleClose = async (success) => {
+    const handleCloseUploadPopUp = async (success) => {
         setIsOpenPopUpUpload(false);
         if (success) {
             await fetchMasterProduct();
@@ -173,8 +175,10 @@ const MasterProductPage = () => {
 
             <PopUpUploadFileProduct
                 show={isOpenPopUpUpload}
-                handleClose={handleClose}
+                handleClose={handleCloseUploadPopUp}
+                type={'product'}
             />
+            <button className="btn btn-success mb-3" onClick={() => navigate('/sale-out')}>Sale Out Page</button>
         </div>
     );
 };

@@ -21,7 +21,6 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
             title: "Bạn có chắc chắn muốn xóa sản phẩm không?",
             text: "Khi xóa sản phẩm thì các lịch sử mua của sản phẩm cũng bị xóa theo",
         });
-        console.log('id', id)
         if (result.isConfirmed) deleteProduct(id);
     };
 

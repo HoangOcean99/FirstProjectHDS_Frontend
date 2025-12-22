@@ -1,6 +1,6 @@
 import { FaDownload, FaPlus, FaUpload } from "react-icons/fa";
 
-const DetailFunctionsComponent = ({ openPopUpInsert, handleDownload, openPopUpUpload, type }) => {
+const DetailFunctionsComponent = ({ openPopUpInsert, handleDownload, openPopUpUpload, openPopUpReport, type }) => {
     return (
         <div className="col-md-12 text-center">
             <button className="btn btn-success me-5" onClick={openPopUpInsert}>
@@ -12,7 +12,7 @@ const DetailFunctionsComponent = ({ openPopUpInsert, handleDownload, openPopUpUp
             <button className="btn btn-outline-success" onClick={openPopUpUpload}>
                 <FaUpload /> Upload
             </button>
-            {type && <button className="btn btn-success ms-5" onClick={openPopUpUpload}>
+            {type && <button className="btn btn-success ms-5" onClick={openPopUpReport}>
                 Báo cáo doanh thu
             </button>}
         </div>

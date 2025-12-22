@@ -14,7 +14,6 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
         quantity: '',
         quantityPerBox: '',
     });
-    console.log('initialData', initialData)
 
     useEffect(() => {
         if (initialData) {
