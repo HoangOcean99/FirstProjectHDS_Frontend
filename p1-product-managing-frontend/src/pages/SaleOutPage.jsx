@@ -215,7 +215,8 @@ const SaleOutPage = () => {
                 handleClose={() => setIsOpenPopUpReport(false)}
                 handleExport={handleExportReport}
             />
-            <button className="btn btn-success mb-3" onClick={() => navigate('/master-product')}>Master Product Page</button>
+            <button className="btn btn-success mb-3 me-3" onClick={() => navigate('/')}>Trang chủ</button>
+            <button className="btn btn-success mb-3" onClick={() => navigate('/master-product')}>Xem sản phẩm</button>
         </div>
     ); s
 }

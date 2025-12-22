@@ -167,7 +167,8 @@ const MasterProductPage = () => {
                 handleClose={handleCloseUploadPopUp}
                 type={'product'}
             />
-            <button className="btn btn-success mb-3" onClick={() => navigate('/sale-out')}>Sale Out Page</button>
+            <button className="btn btn-success mb-3 me-3" onClick={() => navigate('/')}>Trang chủ</button>
+            <button className="btn btn-success mb-3" onClick={() => navigate('/sale-out')}>Xem đơn hàng</button>
         </div>
     );
 };
