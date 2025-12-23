@@ -6,7 +6,7 @@ const PopUpDownloadReport = ({ show, handleClose, handleExport }) => {
         fromDate: '',
         toDate: '',
     });
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -26,7 +26,7 @@ const PopUpDownloadReport = ({ show, handleClose, handleExport }) => {
             size="md"
         >
             <Modal.Header closeButton className="border-0 pb-0">
-                <Modal.Title className="fs-4 fw-normal">Ngày đặt hàng</Modal.Title>
+                <Modal.Title className="fs-4 fw-bold text-success">Báo cáo doanh thu</Modal.Title>
             </Modal.Header>
 
             <Modal.Body className="pt-2">
@@ -44,7 +44,7 @@ const PopUpDownloadReport = ({ show, handleClose, handleExport }) => {
                                         value={formData.fromDate}
                                         onChange={handleChange}
                                         required
-                                        className="border-dark shadow-none"
+                                        className="shadow-none border-success"
                                     />
                                 </div>
                             </Form.Group>
@@ -61,7 +61,7 @@ const PopUpDownloadReport = ({ show, handleClose, handleExport }) => {
                                         value={formData.toDate}
                                         onChange={handleChange}
                                         required
-                                        className="border-dark shadow-none"
+                                        className="shadow-none border-success"
                                     />
                                 </div>
                             </Form.Group>

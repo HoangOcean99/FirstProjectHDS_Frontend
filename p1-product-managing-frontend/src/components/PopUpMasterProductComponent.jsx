@@ -48,7 +48,7 @@ const PopUpMasterProductComponent = ({ show, handleClose, handleSave, initialDat
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title>{modalTitle}</Modal.Title>
+                <Modal.Title className='fs-4 fw-bold text-success'>{modalTitle}</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -136,6 +136,7 @@ const PopUpMasterProductComponent = ({ show, handleClose, handleSave, initialDat
                             </Form.Group>
                         </Col>
                     </Row>
+
                     <div className="d-flex justify-content-end border-top pt-3 mt-3">
                         <Button variant="secondary" onClick={handleClose} className="me-2">
                             Đóng

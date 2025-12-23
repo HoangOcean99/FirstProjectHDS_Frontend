@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
+import { parseNumber } from '../utils/handleNumberUtil';
 
 const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}, allMasterProductData }) => {
 
@@ -27,8 +28,11 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                 price: initialData.price || '',
                 quantity: initialData.quantity || '',
                 quantityPerBox: initialData.quantityPerBox || '',
+                boxQuantity: initialData.boxQuantity || '',
+                amount: initialData.amount || '',
             });
         }
+        console.log('initialData', initialData);
     }, [initialData]);
 
     const isEdit = initialData.id ? true : false;
@@ -38,6 +42,39 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
+
+    useEffect(() => {
+        const { quantity, quantityPerBox } = formData;
+
+        if (quantity > 0 && quantityPerBox > 0) {
+            setFormData(prev => ({
+                ...prev,
+                boxQuantity: Math.ceil(Number(quantity) / Number(quantityPerBox)),
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                boxQuantity: '',
+            }));
+        }
+    }, [formData.quantity, formData.quantityPerBox]);
+
+    useEffect(() => {
+        const { quantity, price } = formData;
+
+        if (quantity > 0 && price > 0) {
+            setFormData(prev => ({
+                ...prev,
+                amount: Math.ceil(Number(quantity) * Number(price)),
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                amount: '',
+            }));
+        }
+    }, [formData.quantity, formData.price]);
+
     const handleSelectProduct = (e) => {
         const selectedProductCode = e.target.value;
         const selectedProduct = allMasterProductData.find(
@@ -77,7 +114,7 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
             size="lg"
         >
             <Modal.Header closeButton>
-                <Modal.Title className="fs-5 fw-bold">{modalTitle}</Modal.Title>
+                <Modal.Title className="fs-4 fw-bold text-success">{modalTitle}</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
@@ -190,9 +227,39 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                                 <Form.Control
                                     type="number"
                                     name="quantityPerBox"
-                                    value={formData.quantityPerBox}
+                                    value={formData.quantityPerBox || ''}
                                     onChange={handleChange}
                                     required
+                                />
+                            </Form.Group>
+                        </Col>
+                    </Row>
+
+                    <Row className="mb-3">
+                        <Col md={6}>
+                            <Form.Group>
+                                <Form.Label>Số lượng thùng <span className="text-danger">*</span></Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="boxQuantity"
+                                    value={formData.boxQuantity || ''}
+                                    onChange={handleChange}
+                                    required
+                                    disabled={true}
+                                />
+                            </Form.Group>
+                        </Col>
+                        <Col md={6}>
+                            <Form.Group>
+                                <Form.Label>Thành tiền <span className="text-danger">*</span></Form.Label>
+                                <Form.Control
+                                    type="number"
+                                    name="amount"
+                                    value={formData.amount}
+                                    onChange={handleChange}
+                                    step="0.01"
+                                    required
+                                    disabled={true}
                                 />
                             </Form.Group>
                         </Col>

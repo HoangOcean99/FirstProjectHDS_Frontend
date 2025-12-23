@@ -8,7 +8,6 @@ import DataTableComponent from "../components/DataTableComponent";
 import { toast } from "react-toastify";
 import PopUpUploadFileProduct from "../components/PopUpUploadFileProduct";
 import { downloadTemplate } from "../utils/handleTemplateUtil";
-import { notifyError } from "../utils/swalPopUp";
 import { formatNumber } from "../utils/handleNumberUtil";
 import { useNavigate } from "react-router-dom";
 

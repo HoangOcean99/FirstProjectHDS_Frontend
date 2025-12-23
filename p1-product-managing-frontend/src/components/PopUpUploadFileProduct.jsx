@@ -21,7 +21,7 @@ const PopUpUploadFileProduct = ({ show, handleClose, type }) => {
         <div className="p-5">
             <Modal show={show} onHide={handleClose} centered size="md">
                 <Modal.Header closeButton>
-                    <Modal.Title className="fs-5 fw-bold text-success">Tải lên tập tin</Modal.Title>
+                    <Modal.Title className="fs-4 fw-bold text-success">Tải lên tập tin</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body className="py-4 px-5">

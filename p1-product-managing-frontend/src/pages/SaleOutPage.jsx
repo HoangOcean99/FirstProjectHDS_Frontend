@@ -14,6 +14,7 @@ import { downloadReport, downloadTemplate } from "../utils/handleTemplateUtil";
 import PopUpUploadFileProduct from "../components/PopUpUploadFileProduct";
 import PopUpDownloadReport from "../components/PopUpDownLoadReport";
 import { useNavigate } from "react-router-dom";
+import PopUpPrintPdf from "../components/PopUpPrintPdf";
 
 const SaleOutPage = () => {
     const [SaleOutData, setSaleOutData] = useState([]);
@@ -28,6 +29,8 @@ const SaleOutPage = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isOpenPopUpUpload, setIsOpenPopUpUpload] = useState(false);
     const [isOpenPopUpReport, setIsOpenPopUpReport] = useState(false);
+    const [isOpenPopUpPrintPdf, setIsOpenPopUpPrintPdf] = useState(false);
+
     const navigate = useNavigate();
 
     const columnDataExcel = [
@@ -95,25 +98,17 @@ const SaleOutPage = () => {
     const handleSave = async (formData, isEdit, id) => {
         try {
             setIsLoading(true);
+            const dataSend = {
+                ...formData,
+                boxQuantity: Math.ceil(formData.quantity / formData.quantityPerBox),
+                orderDate: formatDateToInt(formData.orderDate),
+                quantity: parseInt(formData.quantity),
+                price: parseInt(formData.price),
+            }
             if (isEdit) {
-                const dataSend = {
-                    ...formData,
-                    boxQuantity: Math.ceil(formData.quantity / formData.quantityPerBox),
-                    orderDate: formatDateToInt(formData.orderDate),
-                    quantity: parseInt(formData.quantity),
-                    price: parseInt(formData.price),
-                }
                 await saleOutApi.editSaleOut({ ...dataSend, id });
                 toast.success("Chỉnh sửa sản phẩm thành công!");
             } else {
-                const dataSend = {
-                    ...formData,
-                    boxQuantity: Math.ceil(formData.quantity / formData.quantityPerBox),
-                    orderDate: formatDateToInt(formData.orderDate),
-                    quantity: parseInt(formData.quantity),
-                    price: parseInt(formData.price)
-
-                }
                 await saleOutApi.insertSaleOut(dataSend);
                 toast.success("Thêm sản phẩm thành công!");
             }
@@ -181,6 +176,7 @@ const SaleOutPage = () => {
                             handleDownload={handleDownload}
                             openPopUpUpload={() => setIsOpenPopUpUpload(true)}
                             openPopUpReport={() => setIsOpenPopUpReport(true)}
+                            openPopUpPrintPdf={() => setIsOpenPopUpPrintPdf(true)}
                             type={true}
                         />
                     </div>
@@ -214,6 +210,10 @@ const SaleOutPage = () => {
                 show={isOpenPopUpReport}
                 handleClose={() => setIsOpenPopUpReport(false)}
                 handleExport={handleExportReport}
+            />
+            <PopUpPrintPdf
+                show={isOpenPopUpPrintPdf}
+                handleClose={() => setIsOpenPopUpPrintPdf(false)}
             />
             <button className="btn btn-success mb-3 me-3" onClick={() => navigate('/')}>Trang chủ</button>
             <button className="btn btn-success mb-3" onClick={() => navigate('/master-product')}>Xem sản phẩm</button>

@@ -5,7 +5,6 @@ import {
 } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Swal from "sweetalert2";
 import './DataTableComponent.css';
 import { confirmDelete } from "../utils/swalPopUp";
 
