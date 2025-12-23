@@ -20,5 +20,9 @@ const saleOutApi = {
         const url = 'SaleOut';
         return axiosClient.put(url, saleOut);
     },
+    getAllSaleOutNo() {
+        const url = 'SaleOut/GetAllSaleOutNo';
+        return axiosClient.get(url);
+    },
 }
 export default saleOutApi;

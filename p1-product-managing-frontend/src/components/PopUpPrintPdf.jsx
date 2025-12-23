@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import saleOutApi from '../api/saleOutApi';
+import { toast } from 'react-toastify';
+import LoadingComponent from './LoadingComponent';
 
-const PopUpPrintPdf = ({ show, handleClose }) => {
+const PopUpPrintPdf = ({ show, handleClose, handleExport }) => {
+    const [allSaleOutNo, setAllSaleOutNo] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const saleOutNoRef = useRef();
+
+    useEffect(() => {
+        fetchSaleOutNo();
+    }, []);
+    const fetchSaleOutNo = async () => {
+        try {
+            setIsLoading(true);
+            const response = await saleOutApi.getAllSaleOutNo();
+            setAllSaleOutNo(response);
+        }
+        catch (error) {
+            toast.error(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        handleExport(saleOutNoRef.current.value);
+    };
+
+    if (isLoading) return <LoadingComponent />;
+
     return (
         <Modal show={show} onHide={handleClose} centered size="md">
             <Modal.Header closeButton className="border-0 pb-0">
@@ -16,8 +45,13 @@ const PopUpPrintPdf = ({ show, handleClose }) => {
                     <Form.Select
                         className="bg-light border-success"
                         style={{ borderRadius: '4px' }}
+                        ref={saleOutNoRef}
                     >
-                        <option>STO2025120002</option>
+                        {allSaleOutNo.map((item, _) => {
+                            return (
+                                <option key={item}>{item}</option>
+                            );
+                        })}
                     </Form.Select>
                 </Form.Group>
             </Modal.Body>
@@ -33,11 +67,12 @@ const PopUpPrintPdf = ({ show, handleClose }) => {
                 <Button
                     variant="success"
                     className="px-4 py-1 border-0 btn btn-success"
+                    onClick={handleSubmit}
                 >
                     Xuất dữ liệu
                 </Button>
             </Modal.Footer>
-        </Modal>
+        </Modal >
     );
 };
 

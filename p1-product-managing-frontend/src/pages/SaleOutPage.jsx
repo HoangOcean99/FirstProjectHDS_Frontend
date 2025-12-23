@@ -2,15 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import DataTableComponent from "../components/DataTableComponent";
 import DetailFunctionsComponent from "../components/DetailFunctionsComponent";
 import SearchComponent from "../components/SearchComponent";
-import SaleOutApi from "../api/SaleOutApi";
-import saleOutApi from "../api/SaleOutApi";
+import saleOutApi from "../api/saleOutApi";
 import LoadingComponent from "../components/LoadingComponent";
 import { formatDateToInt, formatIntDate } from "../utils/handleSaleOut";
 import PopUpSaleOutComponent from "../components/PopUpSaleOutComponent";
 import masterProductApi from "../api/MasterProductApi";
 import { toast } from "react-toastify";
 import { formatNumber } from "../utils/handleNumberUtil";
-import { downloadReport, downloadTemplate } from "../utils/handleTemplateUtil";
+import { downloadReport, downloadReportPdf, downloadTemplate } from "../utils/handleTemplateUtil";
 import PopUpUploadFileProduct from "../components/PopUpUploadFileProduct";
 import PopUpDownloadReport from "../components/PopUpDownLoadReport";
 import { useNavigate } from "react-router-dom";
@@ -79,7 +78,7 @@ const SaleOutPage = () => {
             const totalPages = Math.ceil(mainData.length / rowsPerPage);
             if (page >= totalPages) setPage(totalPages - 1);
         } catch (error) {
-            console.error(error);
+            toast.error(error);
         } finally {
             setIsLoading(false);
         }
@@ -158,6 +157,9 @@ const SaleOutPage = () => {
         const toDate = formatDateToInt(formData.toDate);
         await downloadReport(fromDate, toDate);
     }
+    const handleDownloadReportPdf = async (saleOutNo) => {
+        await downloadReportPdf(saleOutNo);
+    }
 
     if (isLoading) return <LoadingComponent />;
     return (
@@ -214,6 +216,7 @@ const SaleOutPage = () => {
             <PopUpPrintPdf
                 show={isOpenPopUpPrintPdf}
                 handleClose={() => setIsOpenPopUpPrintPdf(false)}
+                handleExport={handleDownloadReportPdf}
             />
             <button className="btn btn-success mb-3 me-3" onClick={() => navigate('/')}>Trang chủ</button>
             <button className="btn btn-success mb-3" onClick={() => navigate('/master-product')}>Xem sản phẩm</button>

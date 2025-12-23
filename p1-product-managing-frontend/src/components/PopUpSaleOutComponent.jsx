@@ -32,7 +32,6 @@ const PopUpSaleOutComponent = ({ show, handleClose, handleSave, initialData = {}
                 amount: initialData.amount || '',
             });
         }
-        console.log('initialData', initialData);
     }, [initialData]);
 
     const isEdit = initialData.id ? true : false;

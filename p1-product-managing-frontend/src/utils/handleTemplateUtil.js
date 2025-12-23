@@ -63,4 +63,21 @@ export const downloadReport = async (fromDate, toDate) => {
         toast.error("Export report thất bại!")
     }
 }
+export const downloadReportPdf = async (saleOutNo) => {
+    try {
+        const response = await templateFileApi.downloadReportPdf(saleOutNo);
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `Report-${saleOutNo}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+        toast.success("Export report thành công!")
+    } catch (error) {
+        toast.error("Export report thất bại!")
+        console.log('error', error)
+    }
+}
 
