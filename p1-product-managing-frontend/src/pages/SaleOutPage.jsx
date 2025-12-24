@@ -130,7 +130,7 @@ const SaleOutPage = () => {
     const handleDelete = async (id) => {
         try {
             setIsLoading(true);
-            await SaleOutApi.deleteSaleOut(id);
+            await saleOutApi.deleteSaleOut(id);
             toast.success("Xóa sản phẩm thành công!");
             await fetchSaleOut();
         } catch (error) {
