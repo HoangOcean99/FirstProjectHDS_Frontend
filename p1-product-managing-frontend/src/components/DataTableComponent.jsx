@@ -8,12 +8,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import './DataTableComponent.css';
 import { confirmDelete } from "../utils/swalPopUp";
 
-const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, page, setPage, rowsPerPage, setRowsPerPage }) => {
+const DataTableComponent = ({ total, data, columnData, deleteProduct, openPopUpEdit, page, setPage, rowsPerPage, setRowsPerPage }) => {
     const [displayData, setDisplayData] = useState([]);
 
     useEffect(() => {
+        console.log('data', data)
         setDisplayData(data || []);
     }, [data]);
+    useEffect(() => {
+        console.log('displayData', displayData)
+    }, [displayData]);
     const handleDelete = async (id) => {
         const result = await confirmDelete({
             title: "Bạn có chắc chắn muốn xóa sản phẩm không?",
@@ -23,11 +27,14 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
     };
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-    };
+    }
+
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        const newRows = parseInt(event.target.value, 10);
+        setRowsPerPage(newRows);
         setPage(0);
-    };
+    }
+
     const maxPage = Math.max(
         0,
         Math.ceil(displayData.length / rowsPerPage) - 1
@@ -65,7 +72,7 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
                     </TableHead>
                     <TableBody>
                         {displayData
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => (
                                 <TableRow
                                     key={row.id}
@@ -98,8 +105,8 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
             </TableContainer>
             <TablePagination
                 component="div"
-                count={displayData.length}
-                page={safePage}
+                count={total}
+                page={page}
                 onPageChange={handleChangePage}
                 rowsPerPage={rowsPerPage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
@@ -107,7 +114,7 @@ const DataTableComponent = ({ data, columnData, deleteProduct, openPopUpEdit, pa
             />
 
         </Paper>
-    );
+    )
 };
 
 export default DataTableComponent;

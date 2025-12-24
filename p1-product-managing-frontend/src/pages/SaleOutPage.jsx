@@ -26,6 +26,7 @@ const SaleOutPage = () => {
     const inputFilterRef = useRef();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [totalRow, setTotalRow] = useState(0);
     const [isOpenPopUpUpload, setIsOpenPopUpUpload] = useState(false);
     const [isOpenPopUpReport, setIsOpenPopUpReport] = useState(false);
     const [isOpenPopUpPrintPdf, setIsOpenPopUpPrintPdf] = useState(false);
@@ -56,13 +57,13 @@ const SaleOutPage = () => {
     ];
     useEffect(() => {
         fetchSaleOut();
-    }, []);
+    }, [page, rowsPerPage]);
     const fetchSaleOut = async () => {
         try {
             setIsLoading(true);
-            const responseSaleOut = await saleOutApi.getAll();
-            const responseMasterProduct = await masterProductApi.getAll();
-            const mainData = responseSaleOut.map((item) => ({
+            const responseSaleOut = await saleOutApi.GetPagedAsync(page + 1, rowsPerPage);
+            console.log('responseSaleOut', responseSaleOut)
+            const mainData = responseSaleOut.items.map((item) => ({
                 ...item,
                 orderDate: formatIntDate(item.orderDate),
                 quantity: formatNumber(item.quantity),
@@ -71,11 +72,12 @@ const SaleOutPage = () => {
                 quantityPerBox: formatNumber(item.quantityPerBox),
                 boxQuantity: formatNumber(item.boxQuantity),
             }));
+            setTotalRow(responseSaleOut.total);
             setSaleOutData(mainData);
             setOriginSaleOutData(mainData);
-            setMasterProductData(responseMasterProduct);
+            setMasterProductData(masterProductData);
 
-            const totalPages = Math.ceil(mainData.length / rowsPerPage);
+            const totalPages = Math.ceil(responseSaleOut.length / rowsPerPage);
             if (page >= totalPages) setPage(totalPages - 1);
         } catch (error) {
             toast.error(error);
@@ -186,6 +188,7 @@ const SaleOutPage = () => {
             </div>
 
             <DataTableComponent
+                total={totalRow}
                 data={SaleOutData}
                 columnData={columnData}
                 deleteProduct={handleDelete}

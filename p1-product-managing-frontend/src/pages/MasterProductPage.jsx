@@ -22,6 +22,7 @@ const MasterProductPage = () => {
     const inputFilterRef = useRef();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [totalRow, setTotalRow] = useState(0);
     const navigate = useNavigate();
 
     const columnData = [
@@ -34,16 +35,17 @@ const MasterProductPage = () => {
     ];
     useEffect(() => {
         fetchMasterProduct();
-    }, []);
+    }, [page, rowsPerPage]);
     const fetchMasterProduct = async () => {
         try {
             setIsLoading(true);
-            const response = await masterProductApi.getAll();
-            const mainData = response.map((item, _) => ({
+            const response = await masterProductApi.GetPagedAsync(page + 1, rowsPerPage);
+            const mainData = response.items.map((item, _) => ({
                 ...item,
                 quantityPerBox: formatNumber(item.quantityPerBox),
                 productWeight: formatNumber(item.productWeight)
             }))
+            setTotalRow(response.total)
             setMasterProductData(mainData);
             setOriginProductData(mainData);
 
@@ -144,6 +146,7 @@ const MasterProductPage = () => {
             </div>
 
             <DataTableComponent
+                total={totalRow}
                 data={masterProductData}
                 columnData={columnData}
                 deleteProduct={handleDelete}

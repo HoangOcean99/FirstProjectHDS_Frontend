@@ -8,6 +8,11 @@ const masterProductApi = {
         const url = 'MasterProduct';
         return axiosClient.get(url);
     },
+    GetPagedAsync(pageIndex, pageSize) {
+        return axiosClient.get('MasterProduct/get-paged', {
+            params: { pageIndex, pageSize }
+        });
+    },
     insertProduct(masterproduct) {
         const url = 'MasterProduct';
         return axiosClient.post(url, masterproduct);

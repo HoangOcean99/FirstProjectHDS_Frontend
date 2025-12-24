@@ -12,9 +12,15 @@ axiosClient.interceptors.request.use((config) => {
         return config;
     }
 
-    config.headers['Content-Type'] = 'application/json';
+    if (['post', 'put', 'patch'].includes(config.method)) {
+        config.headers['Content-Type'] = 'application/json';
+    } else {
+        delete config.headers['Content-Type']; // GET
+    }
+
     return config;
 });
+
 
 axiosClient.interceptors.response.use(
     (response) => {

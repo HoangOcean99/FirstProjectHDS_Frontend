@@ -8,6 +8,11 @@ const saleOutApi = {
         const url = 'SaleOut';
         return axiosClient.get(url);
     },
+    GetPagedAsync(pageIndex, pageSize) {
+        return axiosClient.get('SaleOut/get-paged', {
+            params: { pageIndex, pageSize }
+        });
+    },
     insertSaleOut(saleOut) {
         const url = 'SaleOut';
         return axiosClient.post(url, saleOut);
