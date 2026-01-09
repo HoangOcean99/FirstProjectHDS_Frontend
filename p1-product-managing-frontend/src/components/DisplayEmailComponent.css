@@ -1,0 +1,122 @@
+.email-app-container {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 80vh;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+/* Cột trái: Cố định 30% trên Desktop, không co dãn */
+.email-side-panel {
+    display: table-cell;
+    width: 30%; 
+    vertical-align: top;
+    border-right: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+/* Cột phải: Cố định 70% */
+.email-main-panel {
+    display: table-cell;
+    width: 70%;
+    vertical-align: top;
+    background-color: white;
+}
+
+/* Ép tất cả các container bên trong phải tuân thủ chiều rộng cha */
+.fixed-inner {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Cắt chữ tuyệt đối cho danh sách */
+.strict-truncate {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Cuộn riêng lẻ từng vùng */
+.scroll-area {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Xử lý nội dung mail: Ép xuống dòng kể cả link dài */
+.mail-body-content {
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+/* Responsive cho mobile: Chuyển về khối bình thường */
+@media (max-width: 768px) {
+    .email-app-container, .email-side-panel, .email-main-panel {
+        display: block;
+        width: 100% !important;
+    }
+}
+
+
+
+/* Nút tròn nổi (Floating Action Button) */
+.fab-compose {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #001d35; /* Màu tối sang trọng hoặc dùng màu #c2e7ff như Gmail */
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000; /* Luôn nằm trên cùng */
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.fab-compose:hover {
+    transform: scale(1.1);
+    background-color: #00335c;
+    cursor: pointer;
+}
+
+/* Container chính cần có position relative để nút FAB bám theo */
+.email-app-container {
+    position: relative; /* Rất quan trọng */
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 80vh;
+    border-collapse: collapse;
+}
+
+.compose-popup {
+    position: absolute;
+    bottom: 90px; /* Nằm trên nút FAB (56px + 34px khoảng cách) */
+    left: 25px;
+    width: 400px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

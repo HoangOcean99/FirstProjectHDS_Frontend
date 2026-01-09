@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
     const navigate = useNavigate();
-    
+
     return (
         <div className="mt-5 rounded-5 d-flex align-items-center">
             {/* Container chính */}
@@ -28,21 +28,44 @@ const HomePage = () => {
                             và lưu trữ toàn bộ đơn hàng.
                         </p>
 
-                        {/* Khu vực nút bấm */}
-                        <div className="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                            <button
-                                className="btn btn-outline-success btn-lg px-5 py-3 shadow-sm fw-semibold"
-                                onClick={() => navigate('/master-product')}
-                            >
-                                <i className="bi bi-box-seam me-2"></i> Xem danh sách sản phẩm
-                            </button>
+                        <div className="container mt-4">
+                            <div className='row g-3 mb-3'>
+                                <div className="col-6">
+                                    <button
+                                        className="btn btn-outline-success btn-lg w-100 py-3 shadow-sm fw-semibold"
+                                        onClick={() => navigate('/master-product')}
+                                    >
+                                        <i className="bi bi-box-seam me-2"></i> Sản phẩm
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button
+                                        className="btn btn-outline-success btn-lg w-100 py-3 shadow-sm fw-semibold"
+                                        onClick={() => navigate('/sale-out')}
+                                    >
+                                        <i className="bi bi-plus-circle me-2"></i> Đơn hàng
+                                    </button>
+                                </div>
+                            </div>
 
-                            <button
-                                className="btn btn-outline-success btn-lg px-5 py-3 shadow-sm fw-semibold"
-                                onClick={() => navigate('/sale-out')}
-                            >
-                                <i className="bi bi-plus-circle me-2"></i> Xem danh sách đơn hàng
-                            </button>
+                            <div className='row g-3'>
+                                <div className="col-6">
+                                    <button
+                                        className="btn btn-outline-success btn-lg w-100 py-3 shadow-sm fw-semibold"
+                                        onClick={() => navigate('/email')}
+                                    >
+                                        <i className="bi bi-envelope me-2"></i> Email
+                                    </button>
+                                </div>
+                                <div className="col-6">
+                                    <button
+                                        className="btn btn-outline-success btn-lg w-100 py-3 shadow-sm fw-semibold"
+                                        onClick={() => navigate('/emailByGmailApi')}
+                                    >
+                                        <i className="bi bi-google me-2"></i> Gmail API
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Chỉ số nhanh (Tùy chọn thêm cho đẹp) */}

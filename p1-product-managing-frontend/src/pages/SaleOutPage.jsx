@@ -6,12 +6,11 @@ import saleOutApi from "../api/saleOutApi";
 import LoadingComponent from "../components/LoadingComponent";
 import { formatDateToInt, formatIntDate } from "../utils/handleSaleOut";
 import PopUpSaleOutComponent from "../components/PopUpSaleOutComponent";
-import masterProductApi from "../api/MasterProductApi";
 import { toast } from "react-toastify";
 import { formatNumber } from "../utils/handleNumberUtil";
 import { downloadReport, downloadReportPdf, downloadTemplate } from "../utils/handleTemplateUtil";
 import PopUpUploadFileProduct from "../components/PopUpUploadFileProduct";
-import PopUpDownloadReport from "../components/PopUpDownLoadReport";
+import PopUpDownloadReport from "../components/PopUpDownloadReport";
 import { useNavigate } from "react-router-dom";
 import PopUpPrintPdf from "../components/PopUpPrintPdf";
 
@@ -62,7 +61,6 @@ const SaleOutPage = () => {
         try {
             setIsLoading(true);
             const responseSaleOut = await saleOutApi.GetPagedAsync(page + 1, rowsPerPage);
-            console.log('responseSaleOut', responseSaleOut)
             const mainData = responseSaleOut.items.map((item) => ({
                 ...item,
                 orderDate: formatIntDate(item.orderDate),

@@ -12,12 +12,8 @@ const DataTableComponent = ({ total, data, columnData, deleteProduct, openPopUpE
     const [displayData, setDisplayData] = useState([]);
 
     useEffect(() => {
-        console.log('data', data)
         setDisplayData(data || []);
     }, [data]);
-    useEffect(() => {
-        console.log('displayData', displayData)
-    }, [displayData]);
     const handleDelete = async (id) => {
         const result = await confirmDelete({
             title: "Bạn có chắc chắn muốn xóa sản phẩm không?",

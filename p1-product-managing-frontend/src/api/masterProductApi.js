@@ -1,9 +1,7 @@
 import axiosClient from "./axiosClient";
 
 const masterProductApi = {
-    /**
-     * @returns {Promise<any>}
-     */
+
     getAll() {
         const url = 'MasterProduct';
         return axiosClient.get(url);

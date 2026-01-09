@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import masterProductApi from "../api/MasterProductApi";
+import masterProductApi from "../api/masterProductApi";
 import LoadingComponent from "../components/LoadingComponent";
 import SearchComponent from "../components/SearchComponent";
 import DetailFunctionsComponent from "../components/DetailFunctionsComponent";

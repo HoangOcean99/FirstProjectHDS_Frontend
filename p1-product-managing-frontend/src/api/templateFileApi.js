@@ -1,9 +1,7 @@
 import axiosClient from "./axiosClient";
 
 const templateFileApi = {
-    /**
-     * @returns {Promise<any>}
-     */
+
     downloadTemplate(columns) {
         const url = 'TemplateFile/download-template';
         return axiosClient.post(url, columns, { responseType: 'blob' });

@@ -4,6 +4,7 @@ import queryString from 'query-string';
 const axiosClient = axios.create({
     baseURL: import.meta.env.REACT_APP_API_URL || 'http://localhost:5054/api',
     paramsSerializer: (params) => queryString.stringify(params),
+    withCredentials: true
 });
 
 axiosClient.interceptors.request.use((config) => {
@@ -15,7 +16,7 @@ axiosClient.interceptors.request.use((config) => {
     if (['post', 'put', 'patch'].includes(config.method)) {
         config.headers['Content-Type'] = 'application/json';
     } else {
-        delete config.headers['Content-Type']; // GET
+        delete config.headers['Content-Type']; 
     }
 
     return config;
